@@ -2,10 +2,12 @@ import { Field, Form, Formik } from "formik";
 import React from "react";
 import { searchSchema } from "../utils/schemas";
 import AlertTemplate from "../templates/Alert.template";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomePage() {
     const handleSubmit = (values) => {
-
+        const { legal_names, comercial_names, address_txt, phone_number, website } = values;
     };
 
     return (
@@ -20,8 +22,8 @@ export default function HomePage() {
                 </div>
                 <Formik
                     initialValues={{
-                        legal_names: [],
-                        comercial_names: [],
+                        legal_names: "",
+                        comercial_names: "",
                         address_txt: "",
                         phone_number: "",
                         website: "",
@@ -31,27 +33,32 @@ export default function HomePage() {
                 >
                     {
                         ({ errors, touched }) => (
-                            <Form className="shadow rounded-md p-5">
+                            <Form className="shadow-lg border-2 rounded-md p-5">
                                 <Field type="text" name="legal_names" className="bg-black text-white p-5 my-3 rounded-lg w-full" placeholder="Legal Names" />
                                 {
-                                    errors?.legal_names && touched?.legal_names && <AlertTemplate className="mt-5" message={errors?.legal_names} />
+                                    errors?.legal_names && touched?.legal_names && <AlertTemplate className="my-2" message={errors?.legal_names} />
                                 }
                                 <Field type="text" name="comercial_names" className="bg-black text-white p-5 my-3 rounded-lg w-full" placeholder="Comercial Names" />
                                 {
-                                    errors?.comercial_names && touched?.comercial_names && <AlertTemplate className="mt-5" message={errors?.comercial_names} />
+                                    errors?.comercial_names && touched?.comercial_names && <AlertTemplate className="my-2" message={errors?.comercial_names} />
                                 }
                                 <Field type="text" name="address_txt" className="bg-black text-white p-5 my-3 rounded-lg w-full" placeholder="Company Address" />
                                 {
-                                    errors?.address_txt && touched?.address_txt && <AlertTemplate className="mt-5" message={errors?.address_txt} />
+                                    errors?.address_txt && touched?.address_txt && <AlertTemplate className="my-2" message={errors?.address_txt} />
                                 }
                                 <Field type="text" name="phone_number" className="bg-black text-white p-5 my-3 rounded-lg w-full" placeholder="Phone Number" />
                                 {
-                                    errors?.phone_number && touched?.phone_number && <AlertTemplate className="mt-5" message={errors?.phone_number} />
+                                    errors?.phone_number && touched?.phone_number && <AlertTemplate className="my-2" message={errors?.phone_number} />
                                 }
                                 <Field type="text" name="website" className="bg-black text-white p-5 my-3 rounded-lg w-full" placeholder="Website" />
                                 {
-                                    errors?.website && touched?.website && <AlertTemplate className="mt-5" message={errors?.website} />
+                                    errors?.website && touched?.website && <AlertTemplate className="my-2" message={errors?.website} />
                                 }
+                                <div className="flex justify-center">
+                                    <button type="submit" className="p-5 rounded-full bg-black text-white font-bold max-w-[200px] w-full">
+                                        <FontAwesomeIcon className="mr-2" icon={faSearch} /> Search
+                                    </button>
+                                </div>
                             </Form>
                         )
                     }
