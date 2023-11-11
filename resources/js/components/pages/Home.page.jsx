@@ -1,18 +1,50 @@
 import { Field, Form, Formik } from "formik";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { searchSchema } from "../utils/schemas";
 import AlertTemplate from "../templates/Alert.template";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { SearchContext } from "../context/search.context";
+import { displayToast, splitSpecialChars } from "../utils/utils";
+import messages from "../utils/messages";
+import { useNavigate } from "react-router-dom";
+import SpinnerTemplate from "../templates/Spinner.template";
+import NavbarTemplate from "../templates/Navbar.template";
 
 export default function HomePage() {
+    const [, setSearch] = useContext(SearchContext);
+    const [loading, setLoading] = useState(false);
+    const nvaigate = useNavigate();
+
+    useEffect(() => setSearch(), []);
+
     const handleSubmit = (values) => {
         const { legal_names, commercial_names, address_txt, phone_number, website } = values;
+        setLoading(true);
+        axios.post("/api/veridion_challenge/find_company/", {
+            legal_names: splitSpecialChars(legal_names),
+            commercial_names: splitSpecialChars(commercial_names),
+            address_txt,
+            phone_number,
+            website,
+        }).then((response) => {
+            setSearch(response.data);
+            nvaigate("/reviews");
+            displayToast(messages.SUCCESSFULLY_TITLE, messages.SEARCH_SUCCESSFULLY);
+            setLoading(false);
+        }).catch((err) => {
+            alert(1);
+            if (err) {
+                displayToast(messages.FAILED_TITLE, messages.SEARCH_FAILED, false);
+            }
+            setLoading(false);
+        });
     };
 
     return (
         <div className="fade-in">
-            <img className="m-5 w-48" src="/assets/img/logo.png" />
+            <NavbarTemplate />
             <div className="max-w-4xl mx-auto my-28 px-5">
                 <div className="max-w-lg text-center mx-auto mb-5 font-bold text-5xl">
                     Where you go for services
@@ -56,7 +88,7 @@ export default function HomePage() {
                                 }
                                 <div className="flex justify-center">
                                     <button type="submit" className="p-5 rounded-full bg-black text-white font-bold max-w-[200px] w-full">
-                                        <FontAwesomeIcon className="mr-2" icon={faSearch} /> Search
+                                        {loading ? <SpinnerTemplate /> : <FontAwesomeIcon className="mr-2" icon={faSearch} />} Search
                                     </button>
                                 </div>
                             </Form>

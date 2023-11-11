@@ -18,7 +18,7 @@ abstract class OpenAIServices
             "messages" => [
                 [
                     "role" => "system",
-                    "content" => "Imagine you've recently experienced a notable service from a company. Share a JSON with details about the company, and I'll help you craft a concise and positive human-like review for them.",
+                    "content" => "Imagine you've recently experienced a notable service from a company. Share a JSON with details about the company, and I'll help you craft a human-like review for them.",
                 ],
                 [
                     "role" => "user",
