@@ -3,25 +3,25 @@ import messages from "./messages";
 import { phoneNumberRegex, urlRegex } from "./regex";
 
 export const searchSchema = yup.object().shape({
-    comercial_names: yup.string(),
-    legal_names: yup.string().when("comercial_names", {
-        is: (comercial_names) => !comercial_names,
-        then: () => yup.string().required(messages.LEGALNAME_OR_COMERCIALNAME_REQUIRED),
-        otherwise: () => yup.string(),
+    commercial_names: yup.array().of(yup.string()),
+    legal_names: yup.array().when("commercial_names", {
+        is: (commercial_names) => !commercial_names || commercial_names.length === 0,
+        then: yup.array().required(messages.LEGALNAME_OR_COMMERCIALNAME_REQUIRED).of(yup.string()),
+        otherwise: yup.array().of(yup.string()),
     }),
-    website: yup.string().matches(urlRegex, messages.WEBSITE_VALIDATION),
-    phone_number: yup.string().when("website", {
-        is: (website) => !website,
-        then: () => yup.string().required(messages.PHONENUMBER_WEBSITE_OR_ADDRESS_REQUIRED).matches(phoneNumberRegex, messages.PHONE_VALIDATION),
-        otherwise: () => yup.string().matches(phoneNumberRegex, messages.PHONE_VALIDATION),
+    website: yup.string().when(["phone_number", "address_txt"], {
+        is: (phone_number, address_txt) => !phone_number && !address_txt,
+        then: yup.string().required(messages.WEBSITE_VALIDATION).matches(urlRegex),
+        otherwise: yup.string().matches(urlRegex),
     }),
-    address_txt: yup.string().when("phone_number", {
-        is: (phone_number) => !phone_number,
-        then: () => yup.string().required(messages.PHONENUMBER_WEBSITE_OR_ADDRESS_REQUIRED),
-        otherwise: () => yup.string(),
-    }).when("website", {
-        is: (website) => !website,
-        then: () => yup.string().required(messages.PHONENUMBER_WEBSITE_OR_ADDRESS_REQUIRED),
-        otherwise: () => yup.string(),
+    phone_number: yup.string().when(["website", "address_txt"], {
+        is: (website, address_txt) => !website && !address_txt,
+        then: yup.string().required(messages.PHONENUMBER_WEBSITE_OR_ADDRESS_REQUIRED).matches(phoneNumberRegex, messages.PHONE_VALIDATION),
+        otherwise: yup.string().matches(phoneNumberRegex, messages.PHONE_VALIDATION),
+    }),
+    address_txt: yup.string().when(["phone_number", "website"], {
+        is: (phone_number, website) => !phone_number && !website,
+        then: yup.string().required(messages.PHONENUMBER_WEBSITE_OR_ADDRESS_REQUIRED),
+        otherwise: yup.string(),
     }),
 });

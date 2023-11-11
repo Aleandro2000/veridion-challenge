@@ -11,22 +11,44 @@ class SearchRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array
      */
+
+    private function phoneNumberRule()
+    {
+        return $this->input("website") || $this->input("address_txt") ? "nullable|string|regex:^\+(?:[0-9] ?){6,14}[0-9]$" : "required|string|regex:^\+(?:[0-9] ?){6,14}[0-9]$";
+    }
+
+    private function addressTxtRule()
+    {
+        return ($this->input("phone_number") || $this->input("website")) ? "nullable|string" : "required|string";
+    }
+
+    private function websiteRule()
+    {
+        return ($this->input("phone_number") || $this->input("address_txt")) ? "nullable|string|regex:^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$" : "required|string|regex:^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$";
+    }
+
+    private function legalNamesRules() {
+        return $this->input("commercial_names") ? "nullable|array" : "required|array";
+    }
+
     public function rules(): array
     {
         return [
-            "legal_names" => "array",
-            "comercial_names" => "array",
-            "address_txt" => "string",
-            "phone_number" => "string|regex:^\+(?:[0-9] ?){6,14}[0-9]$",
-            "website" => "string|regex:^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$",
+            "commercial_names" => "array",
+            "commercial_names.*" => "string",
+            "legal_names" => $this->legalNamesRules(),
+            "legal_names.*" => "string",
+            "website" => $this->websiteRule(),
+            "phone_number" => $this->phoneNumberRule(),
+            "address_txt" => $this->addressTxtRule(),
         ];
     }
 }

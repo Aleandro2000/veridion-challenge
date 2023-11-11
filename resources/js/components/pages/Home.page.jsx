@@ -7,7 +7,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomePage() {
     const handleSubmit = (values) => {
-        const { legal_names, comercial_names, address_txt, phone_number, website } = values;
+        const { legal_names, commercial_names, address_txt, phone_number, website } = values;
     };
 
     return (
@@ -23,7 +23,7 @@ export default function HomePage() {
                 <Formik
                     initialValues={{
                         legal_names: "",
-                        comercial_names: "",
+                        commercial_names: "",
                         address_txt: "",
                         phone_number: "",
                         website: "",
@@ -38,9 +38,9 @@ export default function HomePage() {
                                 {
                                     errors?.legal_names && touched?.legal_names && <AlertTemplate className="my-2" message={errors?.legal_names} />
                                 }
-                                <Field type="text" name="comercial_names" className="bg-black text-white p-5 my-3 rounded-lg w-full" placeholder="Comercial Names" />
+                                <Field type="text" name="commercial_names" className="bg-black text-white p-5 my-3 rounded-lg w-full" placeholder="Comercial Names" />
                                 {
-                                    errors?.comercial_names && touched?.comercial_names && <AlertTemplate className="my-2" message={errors?.comercial_names} />
+                                    errors?.commercial_names && touched?.commercial_names && <AlertTemplate className="my-2" message={errors?.commercial_names} />
                                 }
                                 <Field type="text" name="address_txt" className="bg-black text-white p-5 my-3 rounded-lg w-full" placeholder="Company Address" />
                                 {
