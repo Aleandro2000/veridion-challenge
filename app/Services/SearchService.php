@@ -12,9 +12,11 @@ abstract class SearchService
 {
     public static function findCompany(SearchRequest $request)
     {
+        $companyData = VeridionServices::getCompanyData($request);
+        $userFeedback = OpenAIServices::sumariseData($companyData);
         return [
-            "company_data" => VeridionServices::getCompanyData($request),
-            "users_feddback" => OpenAIServices::sumariseData($request),
+            "company_data" => $companyData,
+            "users_feedback" => $userFeedback,
         ];
     }
 }

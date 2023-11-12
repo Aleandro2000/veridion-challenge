@@ -46,7 +46,7 @@ export default function HomePage() {
     return (
         <div className="fade-in">
             <NavbarTemplate />
-            <div className="max-w-4xl mx-auto my-28 px-5">
+            <div className="max-w-4xl mx-auto my-28 px-3">
                 <div className="max-w-lg text-center mx-auto mb-5 font-bold text-5xl">
                     Where you go for services
                 </div>
@@ -88,7 +88,7 @@ export default function HomePage() {
                                     errors?.website && touched?.website && <AlertTemplate className="my-2" message={errors?.website} />
                                 }
                                 <div className="flex justify-center">
-                                    <button type="submit" className="p-5 rounded-full bg-black text-white font-bold max-w-[200px] w-full">
+                                    <button type="submit" className="p-5 hover:shadow-lg hover:bg-gray-800 duration-300 rounded-full bg-black text-white font-bold max-w-[200px] w-full">
                                         {loading ? <SpinnerTemplate /> : <FontAwesomeIcon className="mr-2" icon={faSearch} />} Search
                                     </button>
                                 </div>

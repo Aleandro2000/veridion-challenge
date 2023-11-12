@@ -27,3 +27,9 @@ textarea:focus, input:focus{
 .fade-in {
   animation: fade-in 0.3s ease-in-out;
 }
+
+@media print {
+    .hidden-print {
+        display: none !important;
+    }
+}

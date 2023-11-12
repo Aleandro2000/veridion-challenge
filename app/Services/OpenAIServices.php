@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Http\Requests\SearchRequest;
+use Illuminate\Http\Request;
 use OpenAI\Laravel\Facades\OpenAI;
 
 /**
@@ -11,20 +11,33 @@ use OpenAI\Laravel\Facades\OpenAI;
  */
 abstract class OpenAIServices
 {
-    public static function sumariseData(SearchRequest $request)
+    public static function sumariseData(array $data)
     {
+        $reviews = ReviewScraperService::scrapeCompanyData($data["company_name"], $data["main_latitude"], $data["main_longitude"]);
+        $chunkedReviews = array_chunk($reviews, 10);
+        $messages = [
+            [
+                "role" => "system",
+                "content" => "Imagine you've recently experienced a service from a company. Share a JSON with details about the company, and I'll help you craft a human-like review for them.",
+            ],
+            [
+                "role" => "user",
+                "content" => json_encode($data),
+            ],
+        ];
+        foreach ($chunkedReviews as $chunk) {
+            if ($chunk) {
+                array_push($messages, [
+                    [
+                        "role" => "user",
+                        "content" => "There is some other user's feedback in JSON format:" . json_encode($chunk),
+                    ],
+                ]);
+            }
+        }
         return OpenAI::chat()->create([
             "model" => 'gpt-3.5-turbo',
-            "messages" => [
-                [
-                    "role" => "system",
-                    "content" => "Imagine you've recently experienced a notable service from a company. Share a JSON with details about the company, and I'll help you craft a human-like review for them.",
-                ],
-                [
-                    "role" => "user",
-                    "content" => json_encode($request->all()),
-                ],
-            ],
+            "messages" => $messages,
         ])->choices[0]->message->content;
     }
 }

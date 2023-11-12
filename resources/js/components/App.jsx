@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
+import React, { useState } from "react";
+import ReactDOM from "react-dom/client";
 import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import HomePage from './pages/Home.page';
-import ReviewsPage from './pages/Reviews.page';
-import NotFound from './pages/NotFound.page';
-import { SearchContext } from './context/search.context';
-import ReviewRoute from './routes/Review.route';
+import HomePage from "./pages/Home.page";
+import ReviewsPage from "./pages/Reviews.page";
+import NotFound from "./pages/NotFound.page";
+import { SearchContext } from "./context/search.context";
+import ReviewRoute from "./routes/Review.route";
+import "leaflet/dist/leaflet.css";
 
 const router = createBrowserRouter([
     {
@@ -39,7 +40,7 @@ export default function App() {
     );
 }
 
-if (document.getElementById('app')) {
+if (document.getElementById("app")) {
     const Index = ReactDOM.createRoot(document.getElementById("app"));
 
     Index.render(
