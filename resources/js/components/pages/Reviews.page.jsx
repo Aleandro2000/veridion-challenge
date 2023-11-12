@@ -191,16 +191,20 @@ export default function ReviewsPage() {
                         </span>
                     </div>
                 </div>
-                <div className="p-5 text-black">
-                    <div className="text-3xl font-bold">
-                        Main Sector
-                    </div>
-                    <div className="my-8 flex flex-wrap">
-                        <span className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
-                            {search?.company_data?.main_sector}
-                        </span>
-                    </div>
-                </div>
+                {
+                    search?.company_data?.main_sector ? (
+                        <div className="p-5 text-black">
+                            <div className="text-3xl font-bold">
+                                Main Sector
+                            </div>
+                            <div className="my-8 flex flex-wrap">
+                                <span className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
+                                    {search?.company_data?.main_sector}
+                                </span>
+                            </div>
+                        </div>
+                    ) : null
+                }
                 <div className="p-5 text-black">
                     <div className="text-3xl font-bold">
                         Primary Phone
@@ -275,11 +279,11 @@ export default function ReviewsPage() {
                     search?.company_data?.naics_2022?.primary ? (
                         <div className="p-5 text-black">
                             <div className="text-3xl font-bold">
-                                NAICS 2022
+                                NAICS 2022 (Primary)
                             </div>
                             <div className="p-5 my-5">
                                 <div className="text-3xl font-bold italic">
-                                    {search?.company_data?.naics_2022?.primary?.label} (Primary)
+                                    {search?.company_data?.naics_2022?.primary?.label}
                                 </div>
                                 <div className="text-xl font-bold my-4 text-justify">
                                     Code: {search?.company_data?.naics_2022?.primary?.code}
@@ -289,18 +293,19 @@ export default function ReviewsPage() {
                     ) : null
                 }
                 {
-                    search?.company_data?.naics_2022?.secondary ? (
+                    search?.company_data?.naics_2022?.secondary?.length ? (
                         <div className="p-5 text-black">
                             <div className="text-3xl font-bold">
-                                NAICS 2022
+                                NAICS 2022 (Secondary)
                             </div>
-                            <div className="p-5 my-5">
-                                <div className="text-3xl font-bold italic">
-                                    {search?.company_data?.naics_2022?.secondary?.label} (Secondary)
-                                </div>
-                                <div className="text-xl font-bold my-4 text-justify">
-                                    Code: {search?.company_data?.naics_2022?.secondary?.code}
-                                </div>
+                            <div className="my-8 flex flex-wrap">
+                                {
+                                    search?.company_data?.ibc_insurance?.map((item, key) => (
+                                        <span key={key} className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
+                                            {item?.label} ({item?.code})
+                                        </span>
+                                    ))
+                                }
                             </div>
                         </div>
                     ) : null
