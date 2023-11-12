@@ -8,6 +8,7 @@ import HomePage from './pages/Home.page';
 import ReviewsPage from './pages/Reviews.page';
 import NotFound from './pages/NotFound.page';
 import { SearchContext } from './context/search.context';
+import ReviewRoute from './routes/Review.route';
 
 const router = createBrowserRouter([
     {
@@ -16,7 +17,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/reviews",
-        element: <ReviewsPage />,
+        element: (
+            <ReviewRoute>
+                <ReviewsPage />
+            </ReviewRoute>
+        ),
     },
     {
         path: "*",
