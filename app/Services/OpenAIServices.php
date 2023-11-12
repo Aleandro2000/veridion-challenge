@@ -30,7 +30,7 @@ abstract class OpenAIServices
                 array_push($messages, [
                     [
                         "role" => "user",
-                        "content" => "There is some other user's feedback in JSON format:" . json_encode($chunk),
+                        "content" => "There is some other user feedback in JSON format:" . json_encode($chunk),
                     ],
                 ]);
             }
