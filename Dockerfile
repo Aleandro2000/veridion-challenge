@@ -1,45 +1,66 @@
-# Use the official PHP 8 image
-FROM php:8.1-fpm
+FROM php:8.0-fpm
 
-# Set the working directory in the container
-WORKDIR /var/www/html
+LABEL maintainer="Mohammad Rahmani <rto1680@gmail.com>"
+
+RUN apt-get update
+RUN apt install -y apt-utils
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    locales \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim \
-    unzip \
-    git
+RUN apt-get install -qq -y \
+  curl \
+  git \
+  libzip-dev \
+  zlib1g-dev \
+  zip unzip
+
+RUN apt install -y libmcrypt-dev libicu-dev libxml2-dev
+RUN apt-get install -y libjpeg-dev libpng-dev libfreetype6-dev libjpeg62-turbo-dev
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
+RUN docker-php-ext-install gd
+
+RUN apt install -y libmagickwand-dev --no-install-recommends && \
+  pecl install imagick && docker-php-ext-enable imagick
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
-RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
-RUN docker-php-ext-install pdo_mysql exif pcntl bcmath gd
+# Install extensions
+RUN docker-php-ext-install \
+  bcmath \
+  pdo_mysql \
+  pcntl \
+  zip \
+  pdo \
+  ctype \
+  tokenizer \
+  fileinfo \
+  xml \
+  intl
 
-# Get composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- \
+  --install-dir=/usr/local/bin --filename=composer && chmod +x /usr/local/bin/composer
 
-# Add user for Laravel
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
-# Copy existing application directory contents
-COPY . /var/www/html
+ENV NODE_VERSION=15.4.0
 
-# Copy existing application directory permissions
-COPY --chown=www:www . /var/www/html
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 
-# Change user
-USER www
+ENV NVM_DIR=/root/.nvm
 
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
-CMD ["php-fpm"]
+RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
+ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+
+COPY . /var/www
+
+WORKDIR /var/www
+
+Run npm install
+
+RUN chown -R www-data:www-data /var/www
+RUN chmod -R 755 /var/www/storage
+
+CMD php-fpm
