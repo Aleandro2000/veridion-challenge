@@ -13,7 +13,7 @@ then
 echo "––––––––––––––––––––––––––––––––––––––––"
 echo "Installing package.json dependencies"
 echo "––––––––––––––––––––––––––––––––––––––––"
-npm install
+npm install --force
 fi
 
 echo "––––––––––––––––––––––––––––––––––––––––"
