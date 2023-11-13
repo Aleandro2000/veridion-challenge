@@ -23,7 +23,7 @@ services:
 
   npm:
     container_name: npm
-    image: node:18.18.0-slim
+    image: node:18.18.0
     command: /bin/bash "/var/www/commands/development/start-npm.sh"
     volumes:
       - ./:/var/www
