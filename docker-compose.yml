@@ -1,33 +1,33 @@
 version: '3'
 
-services: 
+services:
   app:
     container_name: app
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
-    volumes: 
+    volumes:
       - ./:/var/www
       - ./development/php/local.ini:/usr/local/etc/php/conf.d/local.ini
-    networks: 
+    networks:
       - application-network
 
   composer:
     container_name: composer
     image: composer
     command: /bin/bash "/app/commands/development/start-composer.sh"
-    volumes: 
+    volumes:
       - ./:/app
-    networks: 
+    networks:
       - application-network
 
   npm:
     container_name: npm
-    image: node:14.1.0-slim
+    image: node:18.18.0-slim
     command: /bin/bash "/var/www/commands/development/start-npm.sh"
-    volumes: 
+    volumes:
       - ./:/var/www
-    networks: 
+    networks:
       - application-network
 
   nginx:
@@ -35,10 +35,10 @@ services:
     image: nginx:alpine
     ports:
       - 80:80
-    volumes: 
+    volumes:
       - ./:/var/www
       - ./development/nginx/conf.d/:/etc/nginx/conf.d/
-    networks: 
+    networks:
       - application-network
 
   database:
@@ -50,16 +50,16 @@ services:
     environment:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: password
-    volumes: 
+    volumes:
       - data:/var/lib/mysql
       - ./development/mysql/my.conf:/etc/mysql/my.conf
-    networks: 
+    networks:
       - application-network
 
-networks: 
+networks:
   application-network:
     driver: bridge
-    
+
 volumes:
   data:
     driver: local
