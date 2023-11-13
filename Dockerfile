@@ -1,7 +1,5 @@
 FROM php:8.1-fpm
 
-LABEL maintainer="Mohammad Rahmani <rto1680@gmail.com>"
-
 RUN apt-get update
 RUN apt install -y apt-utils
 
@@ -24,26 +22,13 @@ RUN apt install -y libmagickwand-dev --no-install-recommends && \
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install extensions
-RUN docker-php-ext-install \
-  bcmath \
-  pdo_mysql \
-  pcntl \
-  zip \
-  pdo \
-  ctype \
-  tokenizer \
-  fileinfo \
-  xml \
-  intl
-
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- \
   --install-dir=/usr/local/bin --filename=composer && chmod +x /usr/local/bin/composer
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
-ENV NODE_VERSION=15.4.0
+ENV NODE_VERSION=18.18.0
 
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 
@@ -58,7 +43,7 @@ COPY . /var/www
 
 WORKDIR /var/www
 
-Run npm install
+RUN npm install --force
 
 RUN chown -R www-data:www-data /var/www
 RUN chmod -R 755 /var/www/storage

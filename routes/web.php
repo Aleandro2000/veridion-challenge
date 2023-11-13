@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{path?}', function () {
-    return view('welcome');
-});
+Route::get("/{path?}", function () {
+    return view("welcome");
+})->middleware("cors");
 
 Route::get("/assets/{path}", function ($path) {
     return response()->file(public_path("assets/$path"));
-});
+})->middleware("cors");
