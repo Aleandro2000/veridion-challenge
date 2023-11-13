@@ -13,16 +13,21 @@ import "leaflet/dist/leaflet.css";
 
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <HomePage />,
-    },
-    {
-        path: "/reviews",
-        element: (
-            <ReviewRoute>
-                <ReviewsPage />
-            </ReviewRoute>
-        ),
+        path: "/web",
+        children: [
+            {
+                path: "home",
+                element: <HomePage />,
+            },
+            {
+                path: "reviews",
+                element: (
+                    <ReviewRoute>
+                        <ReviewsPage />
+                    </ReviewRoute>
+                ),
+            },
+        ],
     },
     {
         path: "*",

@@ -16,7 +16,11 @@ Route::get('/', function () {
     return redirect('/web');
 });
 
-Route::get("/web/{path?}", function () {
+Route::get('/web', function () {
+    return redirect('/web/home');
+});
+
+Route::get("/web/home/{path?}", function () {
     return view("welcome");
 });
 
