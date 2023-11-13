@@ -12,11 +12,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
+    return redirect('/web');
+});
 
-Route::get("/{path?}", function () {
+Route::get("/web/{path?}", function () {
     return view("welcome");
-})->middleware("cors");
+});
 
 Route::get("/assets/{path}", function ($path) {
     return response()->file(public_path("assets/$path"));
-})->middleware("cors");
+});
