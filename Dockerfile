@@ -55,6 +55,8 @@ COPY . /var/www
 
 WORKDIR /var/www
 
+RUN npm install --force
+
 RUN chown -R www-data:www-data /var/www
 RUN chmod -R 755 /var/www/storage
 
