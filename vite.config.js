@@ -14,11 +14,9 @@ export default defineConfig({
         react(),
     ],
     server: {
-        host: '0.0.0.0',
-        port: 5173,
+        host: true,
+        port: 8000,
         hmr: {
-            port: 5173,
-            clientPort: 5173,
             host: 'localhost',
         },
         watch: {
