@@ -49,8 +49,10 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: veridion-database
+      MYSQL_USER: veridion-challenge-user
+      MYSQL_PASSWORD: iKC454QD:}]_-^3OMJDSw({*~L`/k$&XR£/7W"vj5<E-m3'%"b
+      MYSQL_ROOT_PASSWORD: gP!;${92k{g;PtN33)s>B#.M£W]:3X5|VOFQA~GAfoo]zyA7pk
     volumes:
       - data:/var/lib/mysql
       - ./production/mysql/my.conf:/etc/mysql/my.conf
