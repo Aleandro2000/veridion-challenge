@@ -31,7 +31,7 @@ export default function HomePage() {
             website,
         }).then((response) => {
             setSearch(response.data);
-            nvaigate("/reviews");
+            nvaigate("/web/reviews");
             displayToast(messages.SUCCESSFULLY_TITLE, messages.SEARCH_SUCCESSFULLY);
             setLoading(false);
         }).catch((err) => {

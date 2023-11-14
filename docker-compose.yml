@@ -25,6 +25,8 @@ services:
     container_name: npm
     image: node:18.18.0
     command: /bin/bash "/var/www/commands/development/start-npm.sh"
+    ports:
+      - 5173:5173
     volumes:
       - ./:/var/www
     networks:
