@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import SpinnerTemplate from "../templates/Spinner.template";
 import NavbarTemplate from "../templates/Navbar.template";
 import FooterTemplate from "../templates/Footer.template";
+import TopRedirectButtonTemplate from "../templates/Topredirectbutton.template";
 
 export default function HomePage() {
     const [, setSearch] = useContext(SearchContext);
@@ -98,6 +99,7 @@ export default function HomePage() {
                 </Formik>
             </div>
             <FooterTemplate />
+            <TopRedirectButtonTemplate />
         </div>
     );
 }

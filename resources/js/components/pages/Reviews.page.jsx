@@ -8,6 +8,7 @@ import { faFile, faMapMarker, faQuoteLeft, faQuoteRight } from "@fortawesome/fre
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import TopRedirectButtonTemplate from "../templates/Topredirectbutton.template";
 
 export default function ReviewsPage() {
     const [search] = useContext(SearchContext);
@@ -408,6 +409,7 @@ export default function ReviewsPage() {
                 }
             </div>
             <FooterTemplate />
+            <TopRedirectButtonTemplate />
         </div>
     );
 }
