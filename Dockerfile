@@ -8,6 +8,7 @@ RUN apt-get install -qq -y \
   curl \
   git \
   libzip-dev \
+  libmagic-dev \
   zlib1g-dev \
   zip unzip
 
