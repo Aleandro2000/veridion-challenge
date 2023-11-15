@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
 use OpenAI\Laravel\Facades\OpenAI;
 
 /**
