@@ -51,8 +51,8 @@ services:
     environment:
       MYSQL_DATABASE: veridion-database
       MYSQL_USER: veridion-challenge-user
-      MYSQL_PASSWORD: iKC454QD:}]_-^3OMJDSw({*~L`/k$&XR£/7W"vj5<E-m3'%"b
-      MYSQL_ROOT_PASSWORD: gP!;${92k{g;PtN33)s>B#.M£W]:3X5|VOFQA~GAfoo]zyA7pk
+      MYSQL_PASSWORD: Hx3Z7pY9sL2qA8oB
+      MYSQL_ROOT_PASSWORD: Hx3Z7pY9sL2qA8oB
     volumes:
       - data:/var/lib/mysql
       - ./production/mysql/my.conf:/etc/mysql/my.conf
