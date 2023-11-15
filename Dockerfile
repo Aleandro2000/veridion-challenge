@@ -1,7 +1,7 @@
 FROM php:8.1-fpm
 
 RUN apt-get update
-RUN apt install -y apt-utils
+RUN apt install -y --no-install-recommends apt-utils
 
 # Install dependencies
 RUN apt-get install -qq -y \
