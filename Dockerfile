@@ -22,17 +22,17 @@ RUN apt install -y libmagickwand-dev --no-install-recommends && \
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install extensions
-RUN docker-php-ext-install \
-  bcmath \
-  pdo_mysql \
-  pcntl \
-  zip \
-  pdo \
-  ctype \
-  fileinfo \
-  xml \
-  intl
+# Install PHP extensions
+RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pcntl
+RUN docker-php-ext-install zip
+RUN docker-php-ext-install pdo
+RUN docker-php-ext-install ctype
+RUN docker-php-ext-install fileinfo
+RUN docker-php-ext-install xml
+RUN docker-php-ext-install intl
+
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- \
