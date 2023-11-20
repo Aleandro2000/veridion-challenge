@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import { icon } from "leaflet";
 import { specialCharsRegex } from "./regex";
 
 const Toast = Swal.mixin({
@@ -26,3 +27,11 @@ export const displayToast = (title, text, type = true) => Toast.fire({
 });
 
 export const splitSpecialChars = (input) => input?.length ? input?.split(specialCharsRegex) : [];
+
+export const iconMark = icon({
+  iconSize: [25, 41],
+  iconAnchor: [10, 41],
+  popupAnchor: [2, -40],
+  iconUrl: "https://unpkg.com/leaflet@1.6/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.6/dist/images/marker-shadow.png"
+});

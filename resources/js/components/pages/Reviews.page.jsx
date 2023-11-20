@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import TopRedirectButtonTemplate from "../templates/Topredirectbutton.template";
+import { iconMark } from "../utils/utils";
 
 export default function ReviewsPage() {
     const [search] = useContext(SearchContext);
@@ -30,7 +31,7 @@ export default function ReviewsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="p-5 font-bold text-black">
                         <div className="text-3xl">
-                            {search?.company_data?.company_name}
+                            {search?.company_data?.company_name ?? "-"}
                         </div>
                         <div className="text-sm font-bold my-8 flex flex-wrap">
                             {
@@ -38,7 +39,7 @@ export default function ReviewsPage() {
                                     <span key={key} className="bg-black text-white p-3 mx-3 my-2 rounded-full">
                                         {item}
                                     </span>
-                                ))
+                                )) ?? "-"
                             }
                         </div>
                     </div>
@@ -52,7 +53,7 @@ export default function ReviewsPage() {
                                     <span key={key} className="bg-black text-white p-3 mx-3 my-2 rounded-full">
                                         {item}
                                     </span>
-                                ))
+                                )) ?? "-"
                             }
                         </div>
                     </div>
@@ -75,7 +76,7 @@ export default function ReviewsPage() {
                             {search?.company_data?.employee_count ?? 0} employees
                         </span>
                         <span className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
-                            {search?.company_data?.estimated_revenue}$ estimated revenue
+                            {search?.company_data?.estimated_revenue ?? 0}$ estimated revenue
                         </span>
                     </div>
                 </div>
@@ -112,7 +113,7 @@ export default function ReviewsPage() {
                             {
                                 search?.company_data?.locations?.map((item, key) => <Marker key={key} eventHandlers={{
                                     click: () => window.location.href = `https://www.google.com/maps/search/?api=1&query=${item?.latitude ?? 0},${item?.longitude ?? 0}`,
-                                }} position={[item?.latitude ?? 0, item?.longitude ?? 0]} />
+                                }} position={[item?.latitude ?? 0, item?.longitude ?? 0]} icon={iconMark} />
                                 )
                             }
                         </MapContainer>
@@ -142,22 +143,30 @@ export default function ReviewsPage() {
                         ) : null
                     }
                 </div>
-                <div className="p-5 text-black">
-                    <div className="text-3xl font-bold">
-                        Short Description
-                    </div>
-                    <div className="text-md my-8 text-justify">
-                        {search?.company_data?.short_description}
-                    </div>
-                </div>
-                <div className="p-5 text-black">
-                    <div className="text-3xl font-bold">
-                        Long Description
-                    </div>
-                    <div className="text-md my-8 text-justify">
-                        {search?.company_data?.long_description}
-                    </div>
-                </div>
+                {
+                    search?.company_data?.short_description ? (
+                        <div className="p-5 text-black">
+                            <div className="text-3xl font-bold">
+                                Short Description
+                            </div>
+                            <div className="text-md my-8 text-justify">
+                                {search?.company_data?.short_description}
+                            </div>
+                        </div>
+                    ) : null
+                }
+                {
+                    search?.company_data?.long_description ? (
+                        <div className="p-5 text-black">
+                            <div className="text-3xl font-bold">
+                                Long Description
+                            </div>
+                            <div className="text-md my-8 text-justify">
+                                {search?.company_data?.long_description}
+                            </div>
+                        </div>
+                    ) : null
+                }
                 <div className="p-5 text-black">
                     <div className="text-3xl font-bold">
                         Business Tags
@@ -168,30 +177,38 @@ export default function ReviewsPage() {
                                 <span key={key} className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
                                     {item}
                                 </span>
-                            ))
+                            )) ?? "-"
                         }
                     </div>
                 </div>
-                <div className="p-5 text-black">
-                    <div className="text-3xl font-bold">
-                        Main Business Category
-                    </div>
-                    <div className="my-8 flex flex-wrap">
-                        <span className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
-                            {search?.company_data?.main_business_category}
-                        </span>
-                    </div>
-                </div>
-                <div className="p-5 text-black">
-                    <div className="text-3xl font-bold">
-                        Main Industry
-                    </div>
-                    <div className="my-8 flex flex-wrap">
-                        <span className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
-                            {search?.company_data?.main_industry}
-                        </span>
-                    </div>
-                </div>
+                {
+                    search?.company_data?.main_business_category ? (
+                        <div className="p-5 text-black">
+                            <div className="text-3xl font-bold">
+                                Main Business Category
+                            </div>
+                            <div className="my-8 flex flex-wrap">
+                                <span className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
+                                    {search?.company_data?.main_business_category}
+                                </span>
+                            </div>
+                        </div>
+                    ) : null
+                }
+                {
+                    search?.company_data?.main_industry ? (
+                        <div className="p-5 text-black">
+                            <div className="text-3xl font-bold">
+                                Main Industry
+                            </div>
+                            <div className="my-8 flex flex-wrap">
+                                <span className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
+                                    {search?.company_data?.main_industry}
+                                </span>
+                            </div>
+                        </div>
+                    ) : null
+                }
                 {
                     search?.company_data?.main_sector ? (
                         <div className="p-5 text-black">
@@ -206,18 +223,22 @@ export default function ReviewsPage() {
                         </div>
                     ) : null
                 }
-                <div className="p-5 text-black">
-                    <div className="text-3xl font-bold">
-                        Primary Phone
-                    </div>
-                    <div className="my-8 flex flex-wrap">
-                        <span className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
-                            <a href={`phone:${search?.company_data?.primary_phone}`}>
-                                {search?.company_data?.primary_phone}
-                            </a>
-                        </span>
-                    </div>
-                </div>
+                {
+                    search?.company_data?.primary_phone ? (
+                        <div className="p-5 text-black">
+                            <div className="text-3xl font-bold">
+                                Primary Phone
+                            </div>
+                            <div className="my-8 flex flex-wrap">
+                                <span className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
+                                    <a href={`phone:${search?.company_data?.primary_phone}`}>
+                                        {search?.company_data?.primary_phone}
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    ) : null
+                }
                 <div className="p-5 text-black">
                     <div className="text-3xl font-bold">
                         Phone Numbers
@@ -230,7 +251,7 @@ export default function ReviewsPage() {
                                         {item}
                                     </a>
                                 </span>
-                            ))
+                            )) ?? "-"
                         }
                     </div>
                 </div>
@@ -244,22 +265,26 @@ export default function ReviewsPage() {
                                 <span key={key} className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
                                     {item}
                                 </span>
-                            ))
+                            )) ?? "-"
                         }
                     </div>
                 </div>
-                <div className="p-5 text-black">
-                    <div className="text-3xl font-bold">
-                        Primary Email
-                    </div>
-                    <div className="my-8 flex flex-wrap">
-                        <span className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
-                            <a href={`mailto:${search?.company_data?.primary_email}`}>
-                                {search?.company_data?.primary_email}
-                            </a>
-                        </span>
-                    </div>
-                </div>
+                {
+                    search?.company_data?.primary_email ? (
+                        <div className="p-5 text-black">
+                            <div className="text-3xl font-bold">
+                                Primary Email
+                            </div>
+                            <div className="my-8 flex flex-wrap">
+                                <span className="bg-black font-bold text-white p-3 mx-3 my-2 rounded-full">
+                                    <a href={`mailto:${search?.company_data?.primary_email}`}>
+                                        {search?.company_data?.primary_email}
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    ) : null
+                }
                 <div className="p-5 text-black">
                     <div className="text-3xl font-bold">
                         Emails
@@ -272,7 +297,7 @@ export default function ReviewsPage() {
                                         {item}
                                     </a>
                                 </span>
-                            ))
+                            )) ?? "-"
                         }
                     </div>
                 </div>
