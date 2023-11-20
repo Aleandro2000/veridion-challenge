@@ -7,6 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
+      - ./:/var/www
       - ./development/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - application-network
@@ -14,7 +15,7 @@ services:
   composer:
     container_name: composer
     image: composer
-    command: /bin/bash "/app/commands/production/start-composer.sh"
+    command: /bin/bash "/app/commands/development/start-composer.sh"
     volumes:
       - ./:/app
     networks:
@@ -23,7 +24,9 @@ services:
   npm:
     container_name: npm
     image: node:18.18.0
-    command: /bin/bash "/var/www/commands/production/start-npm.sh"
+    command: /bin/bash "/var/www/commands/development/start-npm.sh"
+    ports:
+      - 5173:5173
     volumes:
       - ./:/var/www
     networks:
@@ -36,7 +39,7 @@ services:
       - 80:80
     volumes:
       - ./:/var/www
-      - ./production/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./development/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - application-network
 
@@ -48,12 +51,10 @@ services:
       - 3306:3306
     environment:
       MYSQL_DATABASE: veridion-database
-      MYSQL_USER: veridion-challenge-user
-      MYSQL_PASSWORD: Hx3Z7pY9sL2qA8oB
       MYSQL_ROOT_PASSWORD: Hx3Z7pY9sL2qA8oB
     volumes:
       - data:/var/lib/mysql
-      - ./production/mysql/my.conf:/etc/mysql/my.conf
+      - ./development/mysql/my.conf:/etc/mysql/my.conf
     networks:
       - application-network
 

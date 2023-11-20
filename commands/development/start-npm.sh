@@ -19,4 +19,4 @@ fi
 echo "––––––––––––––––––––––––––––––––––––––––"
 echo "Starting npm watch ..."
 echo "––––––––––––––––––––––––––––––––––––––––"
-npm run watch
+npm run dev

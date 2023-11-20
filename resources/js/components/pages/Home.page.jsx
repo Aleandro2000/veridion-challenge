@@ -36,7 +36,6 @@ export default function HomePage() {
             displayToast(messages.SUCCESSFULLY_TITLE, messages.SEARCH_SUCCESSFULLY);
             setLoading(false);
         }).catch((err) => {
-            alert(1);
             if (err) {
                 displayToast(messages.FAILED_TITLE, messages.SEARCH_FAILED, false);
             }
