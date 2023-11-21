@@ -415,7 +415,7 @@ export default function ReviewsPage() {
                     ) : null
                 }
                 {
-                    search?.company_data?.ibc_insurance ? (
+                    search?.company_data?.ibc_insurance?.length ? (
                         <div className="p-5 text-black">
                             <div className="text-3xl font-bold">
                                 IBC INSURANCE
