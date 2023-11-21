@@ -88,7 +88,7 @@ export default function HomePage() {
                                     errors?.website && touched?.website && <AlertTemplate className="my-2" message={errors?.website} />
                                 }
                                 <div className="flex justify-center">
-                                    <button type="submit" disabled={!loading} className="p-5 hover:shadow-lg hover:bg-gray-800 duration-300 rounded-full bg-black text-white font-bold max-w-[200px] w-full">
+                                    <button type="submit" disabled={loading} className="p-5 hover:shadow-lg hover:bg-gray-800 duration-300 rounded-full bg-black text-white font-bold max-w-[200px] w-full">
                                         {loading ? <SpinnerTemplate /> : <FontAwesomeIcon className="mr-2" icon={faSearch} />} Search
                                     </button>
                                 </div>
